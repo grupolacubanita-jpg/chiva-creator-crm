@@ -941,7 +941,7 @@ function DashboardModule({ dark }: { dark: boolean }) {
               <YAxis stroke={dark ? '#94a3b8' : '#6b7280'} fontSize={12} />
               <Tooltip
                 contentStyle={{ background: dark ? '#161d33' : '#fff', border: 'none', borderRadius: 8, fontSize: 12 }}
-                formatter={(v: number) => [`€ ${Number(v).toFixed(2)}`, 'Valor']}
+                formatter={(v: unknown) => [`€ ${Number(v).toFixed(2)}`, 'Valor']}
               />
               <Bar dataKey="valor" radius={[6, 6, 0, 0]}>
                 {chartData.map((entry, idx) => (
