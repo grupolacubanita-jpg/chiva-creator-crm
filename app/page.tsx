@@ -1,5 +1,5 @@
 ﻿"use client";
-import { useState } from "react";
+import { useState, useRef } from "react";
 
 const NAV_ITEMS = [
   { id: "dashboard", label: "Dashboard", icon: "📊" },
@@ -51,7 +51,9 @@ function Sidebar({ active, setActive, collapsed, setCollapsed }: any) {
   );
 }
 
-function Topbar({ search, setSearch, darkMode, setDarkMode, page }: any) {
+function Topbar({ search, setSearch, darkMode, setDarkMode, page, avatar, onAvatarChange }: any) {
+  const fileRef = useRef<HTMLInputElement>(null);
+
   return (
     <div style={{
       height: 60,
@@ -75,12 +77,38 @@ function Topbar({ search, setSearch, darkMode, setDarkMode, page }: any) {
       />
       <button onClick={() => setDarkMode(!darkMode)} style={{
         background: "none", border: "none", cursor: "pointer", fontSize: 20
-      }}>{darkMode ? "Sol" : "Lua"}</button>
-      <div style={{
-        width: 36, height: 36, borderRadius: "50%",
-        background: "#1e40af", display: "flex", alignItems: "center",
-        justifyContent: "center", color: "#fff", fontWeight: 700
-      }}>A</div>
+      }}>{darkMode ? "☀️" : "🌙"}</button>
+
+      <div
+        onClick={() => fileRef.current?.click()}
+        title="Clica para mudar foto de perfil"
+        style={{
+          width: 36, height: 36, borderRadius: "50%",
+          background: "#1e40af",
+          display: "flex", alignItems: "center", justifyContent: "center",
+          color: "#fff", fontWeight: 700, cursor: "pointer",
+          overflow: "hidden", border: "2px solid #3b82f6",
+          flexShrink: 0,
+        }}>
+        {avatar
+          ? <img src={avatar} alt="perfil" style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+          : <span style={{ fontSize: 16 }}>A</span>
+        }
+      </div>
+      <input
+        ref={fileRef}
+        type="file"
+        accept="image/*"
+        style={{ display: "none" }}
+        onChange={e => {
+          const file = e.target.files?.[0];
+          if (file) {
+            const reader = new FileReader();
+            reader.onload = ev => onAvatarChange(ev.target?.result as string);
+            reader.readAsDataURL(file);
+          }
+        }}
+      />
     </div>
   );
 }
@@ -147,6 +175,7 @@ export default function Home() {
   const [collapsed, setCollapsed] = useState(false);
   const [search, setSearch] = useState("");
   const [darkMode, setDarkMode] = useState(true);
+  const [avatar, setAvatar] = useState<string | null>(null);
 
   const sidebarWidth = collapsed ? 64 : 220;
 
@@ -174,7 +203,11 @@ export default function Home() {
     }}>
       <Sidebar active={page} setActive={setPage} collapsed={collapsed} setCollapsed={setCollapsed} />
       <div style={{ marginLeft: sidebarWidth, flex: 1, transition: "margin-left 0.2s" }}>
-        <Topbar search={search} setSearch={setSearch} darkMode={darkMode} setDarkMode={setDarkMode} page={page} />
+        <Topbar
+          search={search} setSearch={setSearch}
+          darkMode={darkMode} setDarkMode={setDarkMode}
+          page={page} avatar={avatar} onAvatarChange={setAvatar}
+        />
         <main style={{ padding: 32 }}>
           {renderPage()}
         </main>
