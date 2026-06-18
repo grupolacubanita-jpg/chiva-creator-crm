@@ -1,22 +1,16 @@
-"use client";
+ï»¿"use client";
 import { useState } from "react";
-import { createClient } from "@supabase/supabase-js";
-
-const supabase = createClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL!,
-  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
-);
 
 const NAV_ITEMS = [
-  { id: "dashboard", label: "Dashboard", icon: "??" },
-  { id: "clientes", label: "Clientes", icon: "??" },
-  { id: "leads", label: "Leads", icon: "??" },
-  { id: "projetos", label: "Projetos", icon: "??" },
-  { id: "tarefas", label: "Tarefas", icon: "?" },
-  { id: "financeiro", label: "Financeiro", icon: "??" },
-  { id: "equipa", label: "Equipa", icon: "??" },
-  { id: "equipamentos", label: "Equipamentos", icon: "??" },
-  { id: "eventos", label: "Eventos", icon: "??" },
+  { id: "dashboard", label: "Dashboard", icon: "ðŸ“Š" },
+  { id: "clientes", label: "Clientes", icon: "ðŸ‘¥" },
+  { id: "leads", label: "Leads", icon: "ðŸŽ¯" },
+  { id: "projetos", label: "Projetos", icon: "ðŸ“" },
+  { id: "tarefas", label: "Tarefas", icon: "âœ…" },
+  { id: "financeiro", label: "Financeiro", icon: "ðŸ’°" },
+  { id: "equipa", label: "Equipa", icon: "ðŸ‘¤" },
+  { id: "equipamentos", label: "Equipamentos", icon: "ðŸŽ¥" },
+  { id: "eventos", label: "Eventos", icon: "ðŸ“…" },
 ];
 
 function Sidebar({ active, setActive, collapsed, setCollapsed }: any) {
@@ -33,11 +27,11 @@ function Sidebar({ active, setActive, collapsed, setCollapsed }: any) {
       zIndex: 100,
     }}>
       <div style={{ padding: "20px 16px", display: "flex", alignItems: "center", gap: 10 }}>
-        {!collapsed && <span style={{ color: "#fff", fontWeight: 700, fontSize: 18 }}>?? Chiva CRM</span>}
+        {!collapsed && <span style={{ color: "#fff", fontWeight: 700, fontSize: 18 }}>Chiva CRM</span>}
         <button onClick={() => setCollapsed(!collapsed)} style={{
           marginLeft: "auto", background: "none", border: "none",
           color: "#94a3b8", cursor: "pointer", fontSize: 18
-        }}>?</button>
+        }}>=</button>
       </div>
       <nav style={{ flex: 1 }}>
         {NAV_ITEMS.map(item => (
@@ -47,16 +41,12 @@ function Sidebar({ active, setActive, collapsed, setCollapsed }: any) {
             background: active === item.id ? "#1e40af" : "transparent",
             color: active === item.id ? "#fff" : "#94a3b8",
             borderRadius: 8, margin: "2px 8px",
-            transition: "all 0.15s",
           }}>
             <span style={{ fontSize: 18 }}>{item.icon}</span>
             {!collapsed && <span style={{ fontSize: 14, fontWeight: 500 }}>{item.label}</span>}
           </div>
         ))}
       </nav>
-      <div style={{ padding: 16, color: "#475569", fontSize: 12 }}>
-        {!collapsed && "v1.0.0"}
-      </div>
     </div>
   );
 }
@@ -64,8 +54,9 @@ function Sidebar({ active, setActive, collapsed, setCollapsed }: any) {
 function Topbar({ search, setSearch, darkMode, setDarkMode, page }: any) {
   return (
     <div style={{
-      height: 60, background: darkMode ? "#1e293b" : "#fff",
-      borderBottom: "1px solid " + (darkMode ? "#334155" : "#e2e8f0"),
+      height: 60,
+      background: darkMode ? "#1e293b" : "#fff",
+      borderBottom: "1px solid #334155",
       display: "flex", alignItems: "center", padding: "0 24px", gap: 16,
       position: "sticky", top: 0, zIndex: 50,
     }}>
@@ -77,14 +68,14 @@ function Topbar({ search, setSearch, darkMode, setDarkMode, page }: any) {
         placeholder="Pesquisar..."
         style={{
           padding: "8px 14px", borderRadius: 8,
-          border: "1px solid " + (darkMode ? "#334155" : "#e2e8f0"),
+          border: "1px solid #334155",
           background: darkMode ? "#0f172a" : "#f8fafc",
           color: darkMode ? "#f1f5f9" : "#0f172a", width: 220, fontSize: 14
         }}
       />
       <button onClick={() => setDarkMode(!darkMode)} style={{
         background: "none", border: "none", cursor: "pointer", fontSize: 20
-      }}>{darkMode ? "??" : "??"}</button>
+      }}>{darkMode ? "Sol" : "Lua"}</button>
       <div style={{
         width: 36, height: 36, borderRadius: "50%",
         background: "#1e40af", display: "flex", alignItems: "center",
@@ -94,40 +85,7 @@ function Topbar({ search, setSearch, darkMode, setDarkMode, page }: any) {
   );
 }
 
-function Card({ title, value, icon, color }: any) {
-  return (
-    <div style={{
-      background: color || "#1e40af", borderRadius: 12, padding: "20px 24px",
-      color: "#fff", display: "flex", flexDirection: "column", gap: 8, minWidth: 160, flex: 1
-    }}>
-      <span style={{ fontSize: 28 }}>{icon}</span>
-      <span style={{ fontSize: 28, fontWeight: 700 }}>{value}</span>
-      <span style={{ fontSize: 13, opacity: 0.85 }}>{title}</span>
-    </div>
-  );
-}
-
-function Dashboard() {
-  return (
-    <div>
-      <h2 style={{ marginBottom: 24, fontSize: 22, fontWeight: 700 }}>Bem-vindo ao Chiva Creator CRM</h2>
-      <div style={{ display: "flex", gap: 16, flexWrap: "wrap", marginBottom: 32 }}>
-        <Card title="Clientes Ativos" value="24" icon="??" color="#1e40af" />
-        <Card title="Leads" value="12" icon="??" color="#0891b2" />
-        <Card title="Projetos" value="8" icon="??" color="#7c3aed" />
-        <Card title="Receita Mensal" value="€4.200" icon="??" color="#059669" />
-      </div>
-      <div style={{
-        background: "#1e293b", borderRadius: 12, padding: 24,
-        color: "#94a3b8", textAlign: "center"
-      }}>
-        <p style={{ fontSize: 16 }}>?? Gráficos e estatísticas em breve...</p>
-      </div>
-    </div>
-  );
-}
-
-function TablePage({ title, columns, rows }: any) {
+function TablePage({ title, columns }: any) {
   return (
     <div>
       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 20 }}>
@@ -142,22 +100,43 @@ function TablePage({ title, columns, rows }: any) {
           <thead>
             <tr style={{ background: "#0f172a" }}>
               {columns.map((c: string) => (
-                <th key={c} style={{ padding: "12px 16px", textAlign: "left", color: "#94a3b8", fontSize: 13, fontWeight: 600 }}>{c}</th>
+                <th key={c} style={{ padding: "12px 16px", textAlign: "left", color: "#94a3b8", fontSize: 13 }}>{c}</th>
               ))}
             </tr>
           </thead>
           <tbody>
-            {rows.length === 0 ? (
-              <tr><td colSpan={columns.length} style={{ padding: 32, textAlign: "center", color: "#475569" }}>Sem dados ainda</td></tr>
-            ) : rows.map((row: any, i: number) => (
-              <tr key={i} style={{ borderTop: "1px solid #334155" }}>
-                {Object.values(row).map((v: any, j: number) => (
-                  <td key={j} style={{ padding: "12px 16px", color: "#e2e8f0", fontSize: 14 }}>{v}</td>
-                ))}
-              </tr>
-            ))}
+            <tr>
+              <td colSpan={columns.length} style={{ padding: 32, textAlign: "center", color: "#475569" }}>
+                Sem dados ainda
+              </td>
+            </tr>
           </tbody>
         </table>
+      </div>
+    </div>
+  );
+}
+
+function Dashboard() {
+  return (
+    <div>
+      <h2 style={{ marginBottom: 24, fontSize: 22, fontWeight: 700 }}>Bem-vindo ao Chiva Creator CRM</h2>
+      <div style={{ display: "flex", gap: 16, flexWrap: "wrap", marginBottom: 32 }}>
+        {[
+          { title: "Clientes", value: "24", icon: "ðŸ‘¥", color: "#1e40af" },
+          { title: "Leads", value: "12", icon: "ðŸŽ¯", color: "#0891b2" },
+          { title: "Projetos", value: "8", icon: "ðŸ“", color: "#7c3aed" },
+          { title: "Receita", value: "4200", icon: "ðŸ’°", color: "#059669" },
+        ].map(card => (
+          <div key={card.title} style={{
+            background: card.color, borderRadius: 12, padding: "20px 24px",
+            color: "#fff", flex: 1, minWidth: 160
+          }}>
+            <div style={{ fontSize: 28 }}>{card.icon}</div>
+            <div style={{ fontSize: 28, fontWeight: 700 }}>{card.value}</div>
+            <div style={{ fontSize: 13, opacity: 0.85 }}>{card.title}</div>
+          </div>
+        ))}
       </div>
     </div>
   );
@@ -174,14 +153,14 @@ export default function Home() {
   const renderPage = () => {
     switch (page) {
       case "dashboard": return <Dashboard />;
-      case "clientes": return <TablePage title="Clientes" columns={["Nome","Email","Telefone","Estado"]} rows={[]} />;
-      case "leads": return <TablePage title="Leads" columns={["Nome","Fonte","Estado","Data"]} rows={[]} />;
-      case "projetos": return <TablePage title="Projetos" columns={["Projeto","Cliente","Estado","Prazo"]} rows={[]} />;
-      case "tarefas": return <TablePage title="Tarefas" columns={["Tarefa","Responsável","Prioridade","Estado"]} rows={[]} />;
-      case "financeiro": return <TablePage title="Financeiro" columns={["Descrição","Tipo","Valor","Data"]} rows={[]} />;
-      case "equipa": return <TablePage title="Equipa" columns={["Nome","Função","Email","Estado"]} rows={[]} />;
-      case "equipamentos": return <TablePage title="Equipamentos" columns={["Item","Categoria","Estado","Local"]} rows={[]} />;
-      case "eventos": return <TablePage title="Eventos" columns={["Evento","Data","Local","Estado"]} rows={[]} />;
+      case "clientes": return <TablePage title="Clientes" columns={["Nome", "Email", "Telefone", "Estado"]} />;
+      case "leads": return <TablePage title="Leads" columns={["Nome", "Fonte", "Estado", "Data"]} />;
+      case "projetos": return <TablePage title="Projetos" columns={["Projeto", "Cliente", "Estado", "Prazo"]} />;
+      case "tarefas": return <TablePage title="Tarefas" columns={["Tarefa", "Responsavel", "Prioridade", "Estado"]} />;
+      case "financeiro": return <TablePage title="Financeiro" columns={["Descricao", "Tipo", "Valor", "Data"]} />;
+      case "equipa": return <TablePage title="Equipa" columns={["Nome", "Funcao", "Email", "Estado"]} />;
+      case "equipamentos": return <TablePage title="Equipamentos" columns={["Item", "Categoria", "Estado", "Local"]} />;
+      case "eventos": return <TablePage title="Eventos" columns={["Evento", "Data", "Local", "Estado"]} />;
       default: return <Dashboard />;
     }
   };
@@ -191,7 +170,7 @@ export default function Home() {
       display: "flex", minHeight: "100vh",
       background: darkMode ? "#0f172a" : "#f8fafc",
       color: darkMode ? "#f1f5f9" : "#0f172a",
-      fontFamily: "Inter, system-ui, sans-serif"
+      fontFamily: "system-ui, sans-serif"
     }}>
       <Sidebar active={page} setActive={setPage} collapsed={collapsed} setCollapsed={setCollapsed} />
       <div style={{ marginLeft: sidebarWidth, flex: 1, transition: "margin-left 0.2s" }}>
